@@ -199,8 +199,14 @@ class Router {
      */
     public function getBaseURL ()
     {
-        $results = localAPI('GetConfigurationValue', ['setting' => 'SystemURL']);
-        return $results['value'];
+        global $CONFIG;
+
+        if (!isset($CONFIG['SystemURL'])){
+            $results = localAPI('GetConfigurationValue', ['setting' => 'SystemURL']);
+            return $results['value'];
+        }
+
+        return $CONFIG['SystemURL'];
     }
 
     /**
