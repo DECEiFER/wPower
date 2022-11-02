@@ -141,7 +141,7 @@ class Registrar extends Model {
      */
     protected function decode($data)
     {
-        return html_entity_decode(\localAPI('DecryptPassword', ['password2' => $data])['password']);
+        return html_entity_decode(\decrypt($data));
     }
 
     /**
@@ -152,7 +152,7 @@ class Registrar extends Model {
      */
     protected function encode($data)
     {
-        return html_entity_decode(\localAPI('EncryptPassword', ['password2' => $data])['password']);
+        return html_entity_decode(\encrypt($data));
     }
 
 }
