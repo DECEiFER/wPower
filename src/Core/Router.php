@@ -199,8 +199,18 @@ class Router {
      */
     public function getBaseURL ()
     {
-        $results = localAPI('GetConfigurationValue', ['setting' => 'SystemURL']);
-        return $results['value'];
+        if (method_exists('\\WHMCS\\Config\\Setting', 'getValue'))
+        {
+            $systemUrl = rtrim(\WHMCS\Config\Setting::getValue('SystemURL'), '/') . '/';
+        }
+
+        if (!isset($systemUrl))
+        {
+            $results = rtrim(\localAPI('GetConfigurationValue', ['setting' => 'SystemURL']), '/') . '/';
+            return $results['value'];
+        }
+
+        return $systemUrl;
     }
 
     /**
