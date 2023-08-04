@@ -141,7 +141,13 @@ class Registrar extends Model {
      */
     protected function decode($data)
     {
-        return html_entity_decode(\localAPI('DecryptPassword', ['password2' => $data])['password']);
+        if (function_exists('\decrypt'))
+        {
+            return html_entity_decode(\decrypt($data));
+        } else
+        {
+            return html_entity_decode(\localAPI('DecryptPassword', ['password2' => $data])['password']);
+        }
     }
 
     /**
@@ -152,7 +158,13 @@ class Registrar extends Model {
      */
     protected function encode($data)
     {
-        return html_entity_decode(\localAPI('EncryptPassword', ['password2' => $data])['password']);
+        if (function_exists('\encrypt'))
+        {
+            return html_entity_decode(\encrypt($data));
+        } else
+        {
+            return html_entity_decode(\localAPI('EncryptPassword', ['password2' => $data])['password']);
+        }
     }
 
 }
